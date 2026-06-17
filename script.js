@@ -10,7 +10,11 @@ const items = [
     eyebrow: "SIGNAL DETECTED",
     title: "Stream the transmission.",
     body: "The clean exit from the desktop. Open the signal in the outside world.",
-    links: [{ label: "OPEN SPOTIFY", href: "https://open.spotify.com/" }],
+    links: [
+      { label: "LA BOIX SPOTIFY", href: "https://open.spotify.com/artist/2ecmFLQHjkBncMCGZ5yQKx" },
+      { label: "SALVA SPOTIFY", href: "https://open.spotify.com/artist/0JQaXh3HoqpI68C2pYUbNW" },
+      { label: "SPOTIFY ARTIST 03", href: "https://open.spotify.com/artist/49nsDhtufKEYcLkIYv5cln" },
+    ],
   },
   {
     id: "bandcamp",
@@ -23,7 +27,7 @@ const items = [
     eyebrow: "OBJECT AVAILABLE",
     title: "Buy the object.",
     body: "A folder for the artifact, the download, the evidence, the trace.",
-    links: [{ label: "OPEN BANDCAMP", href: "https://bandcamp.com/" }],
+    links: [{ label: "OPEN BANDCAMP", href: "https://theemikeb.bandcamp.com/" }],
   },
   {
     id: "videos",
@@ -36,7 +40,7 @@ const items = [
     eyebrow: "VIDEO_EVIDENCE_001",
     title: "Watch the evidence.",
     body: "Moving image fragments will live here.",
-    links: [{ label: "OPEN YOUTUBE", href: "https://youtube.com/" }],
+    links: [{ label: "OPEN YOUTUBE", href: "https://www.youtube.com/@LaBoixOfficial" }],
   },
   {
     id: "socials",
@@ -50,9 +54,11 @@ const items = [
     title: "Follow the trace.",
     body: "The alias points outward.",
     links: [
-      { label: "INSTAGRAM", href: "https://instagram.com/" },
-      { label: "TIKTOK", href: "https://www.tiktok.com/" },
-      { label: "YOUTUBE", href: "https://youtube.com/" },
+      { label: "LA BOIX INSTAGRAM", href: "https://www.instagram.com/laboixlaboix/" },
+      { label: "THEE MIKE B INSTAGRAM", href: "https://www.instagram.com/theemikebdj/?hl=en" },
+      { label: "SALVA INSTAGRAM", href: "https://www.instagram.com/salvabeats/" },
+      { label: "SOUNDCLOUD", href: "https://soundcloud.com/theemikebdj" },
+      { label: "YOUTUBE", href: "https://www.youtube.com/@LaBoixOfficial" },
     ],
   },
   {
