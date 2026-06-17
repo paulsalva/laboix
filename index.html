@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LA BOIX</title>
+    <meta name="description" content="LA BOIX desktop transmission." />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="desktop" id="desktop">
+      <div class="menu-bar" role="navigation" aria-label="Desktop menu">
+        <button class="menu-logo" data-action="open" data-id="about">LA BOIX</button>
+
+        <div class="menu-item">
+          <button>File</button>
+          <div class="dropdown">
+            <button data-action="open" data-id="about">Open About.txt</button>
+            <button data-action="open" data-id="bandcamp">Open Bandcamp.folder</button>
+            <button data-action="close-all">Close All Windows</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <button>Signal</button>
+          <div class="dropdown">
+            <button data-action="open" data-id="spotify">Tune Spotify.app</button>
+            <button data-action="open" data-id="videos">Play Videos.mov</button>
+            <button data-action="open" data-id="socials">Trace Socials.alias</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <button>Window</button>
+          <div class="dropdown long-dropdown" id="windowMenu"></div>
+        </div>
+
+        <div class="menu-item">
+          <button>Help</button>
+          <div class="dropdown">
+            <button data-action="open" data-id="about">What is this?</button>
+            <a href="mailto:hello@example.com">Contact the source</a>
+          </div>
+        </div>
+      </div>
+
+      <section class="icon-grid" id="iconGrid" aria-label="Desktop icons"></section>
+      <section class="window-layer" id="windowLayer" aria-label="Open windows"></section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
