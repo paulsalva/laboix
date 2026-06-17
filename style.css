@@ -208,18 +208,37 @@ button, a { font: inherit; }
 }
 
 .window-close {
-  width: 17px;
-  height: 17px;
-  display: inline-grid;
-  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  position: relative;
+  display: inline-block;
   border: 2px solid var(--ink);
   border-radius: 50%;
   background: #e9e9df;
-  color: var(--ink);
+  color: transparent;
   padding: 0;
-  line-height: 1;
+  overflow: hidden;
   cursor: pointer;
 }
+
+.window-close::before,
+.window-close::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 7px;
+  height: 2px;
+  background: var(--ink);
+}
+
+.window-close::before { transform: rotate(45deg); }
+.window-close::after { transform: rotate(-45deg); }
+
+.window-close:hover { background: #111; }
+.window-close:hover::before,
+.window-close:hover::after { background: #fff; }
 
 .window-title { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -267,7 +286,7 @@ button, a { font: inherit; }
 
 .artwork {
   display: block;
-  width: 100%;
+  width: min(250px, 100%);
   height: auto;
   margin-top: 14px;
   border: 2px solid var(--ink);

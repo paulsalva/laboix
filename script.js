@@ -255,11 +255,18 @@ function openWindow(id) {
     </div>
   `;
 
-  win.querySelector(".window-close").addEventListener("click", () => closeWindow(id));
+  const closeButton = win.querySelector(".window-close");
+  closeButton.addEventListener("pointerdown", (event) => event.stopPropagation());
+  closeButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    closeWindow(id);
+  });
+
   win.addEventListener("mousedown", () => focusWindow(win));
   makeDraggable(win, win.querySelector(".window-titlebar"));
 
   windowLayer.appendChild(win);
+  clampWindow(win);
   openWindows.set(id, win);
   focusWindow(win);
 }
@@ -296,10 +303,29 @@ function getWindowPosition(item) {
   if (isMobile) return { x: 0, y: 0 };
 
   const width = item.type === "artwork" ? 540 : 480;
-  const rightX = Math.max(150, window.innerWidth - width - 48);
-  const y = Math.min(item.y || 72, Math.max(72, window.innerHeight - 340));
+  const rightX = Math.max(12, window.innerWidth - width - 48);
+  const y = Math.min(item.y || 72, Math.max(42, window.innerHeight - 360));
   return { x: item.x === "right" ? rightX : 260, y };
 }
+
+function clampWindow(win) {
+  if (window.matchMedia("(max-width: 700px)").matches) return;
+
+  const margin = 10;
+  const menuOffset = 34;
+  const maxLeft = Math.max(margin, window.innerWidth - win.offsetWidth - margin);
+  const maxTop = Math.max(menuOffset, window.innerHeight - win.offsetHeight - margin);
+
+  const currentLeft = parseFloat(win.style.left) || margin;
+  const currentTop = parseFloat(win.style.top) || menuOffset;
+
+  win.style.left = `${Math.min(Math.max(margin, currentLeft), maxLeft)}px`;
+  win.style.top = `${Math.min(Math.max(menuOffset, currentTop), maxTop)}px`;
+}
+
+window.addEventListener("resize", () => {
+  openWindows.forEach((win) => clampWindow(win));
+});
 
 function focusWindow(win) {
   win.style.zIndex = ++highestZ;
@@ -324,6 +350,7 @@ function makeDraggable(win, handle) {
   let startTop = 0;
 
   handle.addEventListener("pointerdown", (event) => {
+    if (event.target.closest(".window-close")) return;
     if (window.matchMedia("(max-width: 700px)").matches) return;
     isDragging = true;
     focusWindow(win);
@@ -338,9 +365,9 @@ function makeDraggable(win, handle) {
     if (!isDragging) return;
     const dx = event.clientX - startX;
     const dy = event.clientY - startY;
-    const maxLeft = window.innerWidth - win.offsetWidth - 8;
-    const maxTop = window.innerHeight - win.offsetHeight - 8;
-    const nextLeft = Math.min(Math.max(8, startLeft + dx), Math.max(8, maxLeft));
+    const maxLeft = window.innerWidth - win.offsetWidth - 10;
+    const maxTop = window.innerHeight - win.offsetHeight - 10;
+    const nextLeft = Math.min(Math.max(10, startLeft + dx), Math.max(10, maxLeft));
     const nextTop = Math.min(Math.max(34, startTop + dy), Math.max(34, maxTop));
     win.style.left = `${nextLeft}px`;
     win.style.top = `${nextTop}px`;
