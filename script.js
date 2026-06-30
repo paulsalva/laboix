@@ -244,6 +244,8 @@ function openWindow(id) {
   const position = getWindowPosition(item);
   win.style.left = `${position.x}px`;
   win.style.top = `${position.y}px`;
+  if (position.w) win.style.width = `${position.w}px`;
+  if (position.h) win.style.minHeight = `${position.h}px`;
 
   win.innerHTML = `
     <div class="window-titlebar">
@@ -298,14 +300,52 @@ function createMissingImageNotice(path) {
 
 window.createMissingImageNotice = createMissingImageNotice;
 
+const windowLayout = {
+  spotify: { x: 250, y: 118, w: 500, h: 330 },
+  bandcamp: { x: 110, y: 190, w: 440, h: 300 },
+  videos: { x: 820, y: 150, w: 520, h: 340 },
+  socials: { x: 980, y: 270, w: 440, h: 360 },
+  about: { x: 690, y: 260, w: 470, h: 330 },
+
+  "alla-grande": { x: 520, y: 440, w: 500, h: 420 },
+  coconut: { x: 610, y: 500, w: 490, h: 260 },
+  pasteque: { x: 330, y: 430, w: 500, h: 260 },
+  "pill-popper-remix": { x: 735, y: 120, w: 500, h: 270 },
+  "black-razz": { x: 1030, y: 620, w: 490, h: 260 },
+
+  "dumb-and-dumber": { x: 850, y: 210, w: 460, h: 260 },
+  "what-is-love": { x: 1180, y: 150, w: 500, h: 430 },
+  "baby-wants-to-ride": { x: 1120, y: 130, w: 520, h: 430 },
+  "ladies-room": { x: 640, y: 125, w: 500, h: 260 },
+};
+
 function getWindowPosition(item) {
   const isMobile = window.matchMedia("(max-width: 700px)").matches;
-  if (isMobile) return { x: 0, y: 0 };
+  if (isMobile) return { x: 0, y: 0, w: null, h: null };
 
-  const width = item.type === "artwork" ? 540 : 480;
-  const rightX = Math.max(12, window.innerWidth - width - 48);
-  const y = Math.min(item.y || 72, Math.max(42, window.innerHeight - 360));
-  return { x: item.x === "right" ? rightX : 260, y };
+  const fallback = item.type === "artwork"
+    ? { x: 520, y: 160, w: 520, h: 420 }
+    : { x: 320, y: 170, w: 480, h: 290 };
+
+  const base = windowLayout[item.id] || fallback;
+  const padding = 12;
+  const menuOffset = 34;
+
+  const maxWidth = Math.max(300, window.innerWidth - padding * 2);
+  const maxHeight = Math.max(220, window.innerHeight - menuOffset - padding * 2);
+
+  const width = Math.min(base.w, maxWidth);
+  const height = Math.min(base.h, maxHeight);
+
+  const maxLeft = Math.max(padding, window.innerWidth - width - padding);
+  const maxTop = Math.max(menuOffset, window.innerHeight - height - padding);
+
+  return {
+    x: Math.min(Math.max(padding, base.x), maxLeft),
+    y: Math.min(Math.max(menuOffset, base.y), maxTop),
+    w: width,
+    h: height,
+  };
 }
 
 function clampWindow(win) {
